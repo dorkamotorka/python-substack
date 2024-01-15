@@ -189,7 +189,7 @@ class Api:
         Args:
             publication:
         """
-        custom_domain = publication["custom_domain"]
+        custom_domain = publication["custom_domain_optional"]
         if not custom_domain:
             publication_url = f"https://{publication['subdomain']}.substack.com"
         else:
@@ -270,6 +270,20 @@ class Api:
         )
 
         return Api._handle_response(response=response)["subscriberCount"]
+
+    def get_publication_summary(self):
+
+        """
+        Get publication summary.
+
+        Returns:
+
+        """
+        response = self._session.get(
+            f"{self.publication_url}/publish-dashboard/summary"
+        )
+
+        return Api._handle_response(response=response)
 
     def get_published_posts(
         self, offset=0, limit=25, order_by="post_date", order_direction="desc"
